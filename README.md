@@ -1,6 +1,6 @@
 # app-frontend
 
-> An app-frontend project based on Vue.js && vux-ui
+> A Vue.js project
 
 ## Build Setup
 
@@ -9,10 +9,7 @@
 npm install
 
 # serve with hot reload at localhost:8080
-npm start
-
-# test with standard
-npm test
+npm run dev
 
 # build for production with minification
 npm run build
@@ -20,4 +17,5 @@ npm run build
 # build for production and view the bundle analyzer report
 npm run build --report
 ```
-[![JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard)
+
+For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).

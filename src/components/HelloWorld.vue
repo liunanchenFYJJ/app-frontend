@@ -1,32 +1,32 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <van-button type="primary" @click="query">request</van-button>
+    <button type="primary" @click="query">request</button>
   </div>
 </template>
 
 <script>
-import $ from "jquery";
 export default {
   name: 'HelloWorld',
-  data () {
+  data() {
     return {
       msg: ''
-    }
+    };
   },
   methods: {
-    query: function() {
-      let self = this;
+    query() {
+      const self = this;
       self.$axios.get('/api/v2/movie/top250')
-        .then(function (response) {
+        .then((response) => {
           self.msg = response.data.title;
         })
-        .catch(function (response) {
-          console.log(response);
+        .catch((response) => {
+          self.msg = response;
+          // console.log(response);
         });
     }
   }
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
