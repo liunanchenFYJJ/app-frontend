@@ -37,7 +37,7 @@ export default {
     getAllPrj() {
       const self = this;
       console.log('get')
-      self.$axios.get('/api')
+      self.$axios.post('/api')
         .then((response) => {
           self.msg = response.data.title;
         })
@@ -66,7 +66,7 @@ export default {
         // .catch(function (error) {
         //   console.log(error);
         // });
-      $.get('/api/getAllPrj', {}, function(e) {
+      $.post('/api', {}, function(e) {
         console.log(e);
       })
       // $.ajax({
