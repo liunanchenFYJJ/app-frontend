@@ -25,7 +25,7 @@ module.exports = {
   },
   // add your custom rules here
   rules: {
-    "comma-dangle": [2, "never"],
+    "comma-dangle": [2, "never"], //最后不加逗号
     // don't require .vue extension when importing
     'import/extensions': ['error', 'always', {
       js: 'never',
