@@ -11,6 +11,11 @@ export default {
 
     };
   },
+  created() {
+    const self = this;
+    console.log($)
+    self.getAllPrj();
+  },
   mounted() {
     const self = this;
     self.initMap();
@@ -28,6 +33,57 @@ export default {
       }));
       map.setCurrentCity('苏州');// 设置地图显示的城市 此项是必须设置的
       map.enableScrollWheelZoom(true);// 开启鼠标滚轮缩放
+    },
+    getAllPrj() {
+      const self = this;
+      console.log('get')
+      self.$axios.get('/api')
+        .then((response) => {
+          self.msg = response.data.title;
+        })
+        .catch((response) => {
+          self.msg = response;
+          // console.log(response);
+        });
+      // self.$axios.post('/api/getAllPrj', {})
+      //   .then((response) => {
+      //     console.log(response);
+      //   })
+      //   .catch((response) => {
+      //     console.log(response);
+      //   });
+      // self.$axios.post('http://192.168.0.119:8080/power/getAllPrj', {}, 
+        // {
+        //   headers: {
+        //     'Content-Type': 'multipart/form-data',
+        //     'Access-Control-Allow-Origin': '*'
+        //   }
+        // }
+        // )
+        // .then(function (response) {
+        //   console.log(response);
+        // })
+        // .catch(function (error) {
+        //   console.log(error);
+        // });
+      $.get('/api/getAllPrj', {}, function(e) {
+        console.log(e);
+      })
+      // $.ajax({
+      //   url: 'http://192.168.0.119:8080/power/getAllPrj',
+      //   dataType: 'json',
+      //   processData: false, 
+      //   type: 'post',
+      //   data: {},
+      //   success:function(data){
+      //     console.log(data);
+      //   },
+      //   error:function(XMLHttpRequest, textStatus, errorThrown) {
+      //     console.log(XMLHttpRequest.status);
+      //     console.log(XMLHttpRequest.readyState);
+      //     console.log(textStatus);
+      //   }
+      // });
     }
   }
 };
