@@ -15,40 +15,56 @@
             <el-input clearable v-model="prj.prjCode" placeholder="请输入工程代码"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="getTopten">查询站点</el-button>
+            <el-button type="primary" @click="getTopten">查询</el-button>
             <el-button type="info" @click="onCancel" icon="el-icon-circle-close"></el-button>
-            <el-button type="primary" @click="dialogTableVisible = true">新增维修点</el-button>
+            <el-button type="primary" @click="dialogTableVisible = true">新增</el-button>
           </el-form-item>
         </el-form>
       </div>
       <!-- dialog -->
-      <el-dialog title="收货地址" :visible.sync="dialogTableVisible">
+      <el-dialog title="新增维修点" :visible.sync="dialogTableVisible">
         <el-table :data="tableData">
           <el-table-column property="serName" label="名称" width="150">
             <template slot-scope="scope">
-		          <span v-show="serNameT" ref="serName" @dblclick="insertvalue">{{scope.row.serName}}</span>
-              <el-input v-show="serNameF" v-model="scope.row.serName" @blur="finishvalue"></el-input>
+              <el-input placeholder="serName" v-model="scope.row.serName"></el-input>
             </template>
           </el-table-column>
-          <el-table-column property="serPassword" label="密码"></el-table-column>
-          <el-table-column property="serAddress" label="地址"></el-table-column>
-          <el-table-column property="serLat" label="经度"></el-table-column>
-          <el-table-column property="serLon" label="维度"></el-table-column>
+          <el-table-column property="serPassword" label="密码">
+            <template slot-scope="scope">
+              <el-input placeholder="serPassword" v-model="scope.row.serPassword"></el-input>
+            </template>
+          </el-table-column>
+          <el-table-column property="serAddress" label="地址">
+            <template slot-scope="scope">
+              <el-input placeholder="serAddress" v-model="scope.row.serAddress"></el-input>            
+            </template>
+          </el-table-column>
+          <el-table-column property="serLat" label="经度">
+            <template slot-scope="scope">
+              <el-input placeholder="serLat" v-model="scope.row.serLat"></el-input>            
+            </template>
+          </el-table-column>
+          <el-table-column property="serLon" label="维度">
+            <template slot-scope="scope">
+              <el-input placeholder="serLon" v-model="scope.row.serLon"></el-input>            
+            </template>
+          </el-table-column>
         </el-table>
-        <el-button type="primary" icon="el-icon-circle-plus" @click="oneMoreCol"></el-button>
-        <el-button type="primary">submit</el-button>
+        <el-button size="small" type="primary" icon="el-icon-circle-plus" @click="oneMoreCol"></el-button>
+        <el-button size="small" type="primary" @click="insertvalue">提交</el-button>
       </el-dialog>
       <div v-show="leftshow" id="left">
+        <h3>最近维修点</h3><hr>
         <el-table :data="selectedPrj"
         :default-sort = "{prop: 'distance', order: 'ascending'}">
           <el-table-column
             prop="serName"
-            label="top10">
+            label="维修点">
           </el-table-column>
           <el-table-column
             prop="distance"
             sortable
-            label="distance">
+            label="距离(m)">
           </el-table-column>
         </el-table>
       </div>
@@ -85,14 +101,12 @@ export default {
       selectedPrj: [], // 查询到的结果
       dialogTableVisible: false,
       tableData: [{
-        serName: '1',
-        serPassword: '1',
-        serAddress: '1',
-        serLat: '1',
-        serLon: '1'
+        serName: '',
+        serPassword: '',
+        serAddress: '',
+        serLat: '',
+        serLon: ''
       }],
-      serNameT: true,
-      serNameF: false,
       timeout:  null
     };
   },
@@ -144,15 +158,15 @@ export default {
         let marker = new BMap.Marker(point);
         self.map.addOverlay(marker);
         // marker.setAnimation(BMAP_ANIMATION_BOUNCE);
-        var opts = {
+        let opts = {
 	        width : 200,     // 信息窗口宽度
 	        height: 100,     // 信息窗口高度
 	        title : "海底捞王府井店" , // 信息窗口标题
 	        enableMessage:true,//设置允许信息窗发送短息
 	        message:"亲耐滴，晚上一起吃个饭吧？戳下面的链接看下地址喔~"
 	      }
-	      var infoWindow = new BMap.InfoWindow("地址：北京市东城区王府井大街88号乐天银泰百货八层", opts);
-          marker.addEventListener("click", function() {          
+	      let infoWindow = new BMap.InfoWindow("地址：北京市东城区王府井大街88号乐天银泰百货八层", opts);
+        marker.addEventListener("click", function() {          
           self.map.openInfoWindow(infoWindow,point); //开启信息窗口
         });
       }
@@ -174,7 +188,6 @@ export default {
             self.selectedPrj = response.data.data;
           })
           .catch(function (error) {
-            console.log(error);
             self.leftshow = false;
             self.$message({
               message: '请确认工程代码后重试',
@@ -183,35 +196,28 @@ export default {
           });
       }      
     },
-    onCancel() {
+    onCancel() { // 清空
       const self = this;
       self.leftshow = false;
-      self.prj.prjCode = '';
-      self.prj.prjName = '';
+      Object.keys(self.prj).forEach(key => self.prj[key] = '');
     },
     insertvalue() {
-      console.log(this.$refs);
-      console.log(this.$refs.serName.nextElementSibling);
       const self = this;
-      self.serNameT = false;
-      self.serNameF = true;
-    },
-    finishvalue() {
-      const self = this;
-      self.serNameT = true;
-      self.serNameF = false;
       console.log(self.tableData);
       self.$axios({
         method: 'post',
-        url: 'api/insertServices',
-        data: self.tableData
+        url: 'api/insertService',
+        data: { ...self.tableData[0] }
       })
-        .then(function(response) {
-          console.log(response);
+        .then(function (response) {
+          console.log(response.data.data);
         })
-        .catch(function(error) {
-          console.log(error);
-        })
+        .catch(function (error) {
+          self.$message({
+            message: 'error',
+            type: 'warning'
+          });
+        });
     },
     oneMoreCol() {
       const self = this;
@@ -225,8 +231,8 @@ export default {
     },
     querySearchAsync(queryString, cb) {
       const self = this;
-      var company = self.companys;
-      var results = queryString ? company.filter(self.createStateFilter(queryString)) : company;
+      let company = self.companys;
+      let results = queryString ? company.filter(self.createStateFilter(queryString)) : company;
       results.map(item => {
         return item.value = item.prjName;
       })
@@ -275,5 +281,8 @@ export default {
   #allmap {
     width: 100%;
     height: 100%;
+  }
+  h3 {
+    text-align: center;
   }
 </style>
