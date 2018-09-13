@@ -12,8 +12,9 @@ module.exports = {
     proxyTable: {
       '/api': {
         // target: 'https://api.douban.com/',
-        target: 'http://192.168.0.119:8080/power/',
-        // target: 'http://power.szunipower.com.cn/',
+        // target: 'http://192.168.0.119:8080/power/',
+        target: 'http://power.szunipower.com.cn/',
+        // target: 'http://localhost:3000',
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''

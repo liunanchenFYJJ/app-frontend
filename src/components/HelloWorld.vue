@@ -16,7 +16,7 @@ export default {
   methods: {
     query() {
       const self = this;
-      self.$axios.get('/api/v2/movie/top250')
+      self.$axios.get('api/v2/movie/top250', {})
         .then((response) => {
           self.msg = response.data.title;
         })
