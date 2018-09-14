@@ -22,7 +22,7 @@
         </el-form>
       </div>
       <!-- dialog -->
-      <el-dialog title="新增维修点" :visible.sync="dialogTableVisible">
+      <el-dialog title="新增维修点" :visible.sync="dialogTableVisible" @close='closeDialog'>
         <el-table :data="tableData">
           <el-table-column property="serName" label="名称" width="150">
             <template slot-scope="scope">
@@ -32,6 +32,11 @@
           <el-table-column property="serPassword" label="密码">
             <template slot-scope="scope">
               <el-input placeholder="serPassword" v-model="scope.row.serPassword"></el-input>
+            </template>
+          </el-table-column>
+          <el-table-column property="phone" label="手机号">
+            <template slot-scope="scope">
+              <el-input placeholder="phone" v-model="scope.row.phone"></el-input>
             </template>
           </el-table-column>
           <el-table-column property="serAddress" label="地址">
@@ -50,12 +55,14 @@
             </template>
           </el-table-column>
         </el-table>
-        <el-button size="small" type="primary" icon="el-icon-circle-plus" @click="oneMoreCol"></el-button>
-        <el-button size="small" type="primary" @click="insertvalue">提交</el-button>
+        <span slot="footer" class="dialog-footer">
+          <el-button size="small" type="primary" icon="el-icon-circle-plus" @click="oneMoreCol"></el-button>
+          <el-button size="small" type="primary" @click="insertvalue">提交</el-button>
+        </span>
       </el-dialog>
       <div v-show="leftshow" id="left">
-        <h3>最近维修点</h3><hr>
-        <el-table :data="selectedPrj"
+        <!-- <h3>最近维修点</h3> -->
+        <el-table height="540px" :data="selectedPrj"
         :default-sort = "{prop: 'distance', order: 'ascending'}">
           <el-table-column
             prop="serName"
@@ -103,6 +110,7 @@ export default {
       tableData: [{
         serName: '',
         serPassword: '',
+        phone: '',
         serAddress: '',
         serLat: '',
         serLon: ''
@@ -206,11 +214,19 @@ export default {
       console.log(self.tableData);
       self.$axios({
         method: 'post',
-        url: 'api/insertService',
-        data: { ...self.tableData[0] }
+        url: 'api/insertServices',
+        data: {services: self.tableData}
+        // url: 'api/insertService',
+        // data: { ...self.tableData[0] }
       })
         .then(function (response) {
-          console.log(response.data.data);
+          if (response.data.code === '0000') {
+            self.$message({
+              message: '新增站点成功',
+              type: 'success'
+            });
+            self.dialogTableVisible = false;
+          }
         })
         .catch(function (error) {
           self.$message({
@@ -222,8 +238,9 @@ export default {
     oneMoreCol() {
       const self = this;
       self.tableData.push({
-        serName: '     ',
+        serName: '',
         serPassword: '',
+        phone: '',
         serAddress: '',
         serLat: '',
         serLon: ''
@@ -251,6 +268,11 @@ export default {
       console.log(item);
       const self = this;
       self.prj.prjCode = item.prjCode;
+    },
+    closeDialog() {
+      console.log('close')
+      const self = this;
+      self.tableData = [{}];
     }
   }
 };
@@ -271,18 +293,17 @@ export default {
   }
   #left {
     width: 20%;
+    min-width: 200px;
     height: 100%;
     position: absolute;
     z-index: 100;
     float: left;
-    background-color: white;
-    /* opacity: 0.8; */
+    background: rgba(255, 255, 255, 0);
+    margin-top: 10%;
+    transition: all 3s ease-in 2s;
   }
   #allmap {
     width: 100%;
     height: 100%;
-  }
-  h3 {
-    text-align: center;
   }
 </style>
