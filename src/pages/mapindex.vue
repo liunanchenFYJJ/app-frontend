@@ -44,12 +44,12 @@
               <el-input placeholder="serAddress" v-model="scope.row.serAddress"></el-input>            
             </template>
           </el-table-column>
-          <el-table-column property="serLat" label="经度">
+          <el-table-column property="serLat" label="纬度">
             <template slot-scope="scope">
               <el-input placeholder="serLat" v-model="scope.row.serLat"></el-input>            
             </template>
           </el-table-column>
-          <el-table-column property="serLon" label="维度">
+          <el-table-column property="serLon" label="经度">
             <template slot-scope="scope">
               <el-input placeholder="serLon" v-model="scope.row.serLon"></el-input>            
             </template>
@@ -217,22 +217,22 @@ export default {
     },
     insertvalue() {
       const self = this;
-      let submitable;
-      self.tableData.map((item) => {
-        Object.values(item).filter((subItem) => {
-          if (subItem === '') {
-            return submitable = false;
-          }
-        });
-      })
-      if (submitable) {
+      // let submitable;
+      // self.tableData.map((item) => {
+      //   Object.values(item).filter((subItem) => {
+      //     if (subItem === '') {
+      //       return submitable = false;
+      //     }
+      //   });
+      // })
+      // if (submitable) {
         insert();
-      } else {
-        self.$message({
-          message: '表格不能为空',
-          type: 'warning'
-        });
-      }
+      // } else {
+      //   self.$message({
+      //     message: '表格不能为空',
+      //     type: 'warning'
+      //   });
+      // }
       function insert() {
         self.$axios({
           method: 'post',
