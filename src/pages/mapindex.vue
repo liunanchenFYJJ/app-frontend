@@ -125,7 +125,6 @@ export default {
   mounted() {
     const self = this;
     self.initMap()  // 初始化地图
-    // self.addMarkers();
   },
   methods: {
     initMap() {
@@ -153,7 +152,10 @@ export default {
           self.addMarkers();
         })
         .catch(function (error) {
-          console.log(error);
+          self.$message({
+            message: '请重试刷新',
+            type: 'warning'
+          });
         });
     },
     addMarkers: function() {
@@ -191,7 +193,6 @@ export default {
           data: { prjCode: self.prj.prjCode }
         })
           .then(function (response) {
-            console.log(response.data.data);
             self.leftshow = true;
             self.selectedPrj = response.data.data;
           })
@@ -202,7 +203,12 @@ export default {
               type: 'warning'
             });
           });
-      }      
+      } else {
+        self.$message({
+            message: '请填入工程代码',
+          type: 'info'
+        });      
+      }
     },
     onCancel() { // 清空
       const self = this;
@@ -211,29 +217,46 @@ export default {
     },
     insertvalue() {
       const self = this;
-      console.log(self.tableData);
-      self.$axios({
-        method: 'post',
-        url: 'api/insertServices',
-        data: {services: self.tableData}
-        // url: 'api/insertService',
-        // data: { ...self.tableData[0] }
-      })
-        .then(function (response) {
-          if (response.data.code === '0000') {
-            self.$message({
-              message: '新增站点成功',
-              type: 'success'
-            });
-            self.dialogTableVisible = false;
+      let submitable;
+      self.tableData.map((item) => {
+        Object.values(item).filter((subItem) => {
+          if (subItem === '') {
+            return submitable = false;
           }
-        })
-        .catch(function (error) {
-          self.$message({
-            message: 'error',
-            type: 'warning'
-          });
         });
+      })
+      if (submitable) {
+        insert();
+      } else {
+        self.$message({
+          message: '表格不能为空',
+          type: 'warning'
+        });
+      }
+      function insert() {
+        self.$axios({
+          method: 'post',
+          url: 'api/insertServices',
+          data: {services: self.tableData}
+          // url: 'api/insertService',
+          // data: { ...self.tableData[0] }
+        })
+          .then(function (response) {
+            if (response.data.code === '0000') {
+              self.$message({
+                message: '新增站点成功',
+                type: 'success'
+              });
+              self.dialogTableVisible = false;
+            }
+          })
+          .catch(function (error) {
+            self.$message({
+              message: 'error',
+              type: 'warning'
+            });
+          });
+      }
     },
     oneMoreCol() {
       const self = this;
@@ -253,7 +276,6 @@ export default {
       results.map(item => {
         return item.value = item.prjName;
       })
-      // console.log(results)
       clearTimeout(self.timeout);
       self.timeout = setTimeout(() => {
         cb(results);
@@ -265,12 +287,10 @@ export default {
       };
     },
     handleSelect(item) {
-      console.log(item);
       const self = this;
       self.prj.prjCode = item.prjCode;
     },
     closeDialog() {
-      console.log('close')
       const self = this;
       self.tableData = [{}];
     }
@@ -300,7 +320,6 @@ export default {
     float: left;
     background: rgba(255, 255, 255, 0);
     margin-top: 10%;
-    transition: all 3s ease-in 2s;
   }
   #allmap {
     width: 100%;
