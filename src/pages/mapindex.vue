@@ -11,7 +11,7 @@
               style="width: 200px"
             ></el-autocomplete>
           </el-form-item>
-          <el-form-item>
+          <el-form-item v-show="false">
             <el-input clearable v-model="prj.prjCode" placeholder="请输入工程代码"></el-input>
           </el-form-item>
           <el-form-item>
@@ -69,6 +69,7 @@
             label="维修点">
           </el-table-column>
           <el-table-column
+            width="94"
             prop="distance"
             sortable
             label="距离(m)">
@@ -138,7 +139,7 @@ export default {
         anchor: BMAP_ANCHOR_TOP_RIGHT,
         offset: size
       }));
-      self.map.setMapStyle({style:'midnight'});
+      self.map.setMapStyle({ style: 'midnight' });
     },
     getAllPrj() {
       const self = this;
@@ -147,42 +148,61 @@ export default {
         url: '/api/getAllPrj',
         data: {}
       })
-        .then(function (response) {
+        .then((response) => {
           self.companys = response.data.data;
           self.addMarkers();
         })
-        .catch(function (error) {
-          self.$message({
-            message: '请重试刷新',
-            type: 'warning'
-          });
+        .catch((error) => {
+          if (error) {
+            self.$message({
+              message: '请重试刷新',
+              type: 'warning'
+            });
+          }
         });
     },
-    addMarkers: function() {
+    addMarkers() {
       const self = this;
       self.map.clearOverlays();  // 清除地图覆盖物
-      function addMarker(point){
-        // let myIcon = new BMap.Icon("http://lbsyun.baidu.com/jsdemo/img/fox.gif", new BMap.Size(300,157));
-        // let myIcon = new BMap.Icon("http://hw-iot.com:8020/static/img/map/factory.png", new BMap.Size(30,36));
-        // let marker = new BMap.Marker(point, {icon:myIcon});
-        let marker = new BMap.Marker(point);
-        self.map.addOverlay(marker);
-        // marker.setAnimation(BMAP_ANIMATION_BOUNCE);
-        let opts = {
-	        width : 200,     // 信息窗口宽度
-	        height: 100,     // 信息窗口高度
-	        title : "海底捞王府井店" , // 信息窗口标题
-	        enableMessage:true,//设置允许信息窗发送短息
-	        message:"亲耐滴，晚上一起吃个饭吧？戳下面的链接看下地址喔~"
-	      }
-	      let infoWindow = new BMap.InfoWindow("地址：北京市东城区王府井大街88号乐天银泰百货八层", opts);
-        marker.addEventListener("click", function() {          
-          self.map.openInfoWindow(infoWindow,point); //开启信息窗口
-        });
-      }
-      self.companys.map(item => {
-        addMarker(new BMap.Point(item.prjLon, item.prjLat));
+      let pointArr = [];
+      self.companys.forEach((item) => {
+        let point = new BMap.Point(item.prjLon, item.prjLat);
+        pointArr.push(point);
+        self.addMarker(point);
       })
+      self.map.setViewport(pointArr); // 自适应屏幕
+    },
+    addMarker(point, bounce) {
+      const self = this;
+      let myIcon = new BMap.Symbol(BMap_Symbol_SHAPE_POINT, {
+        scale: 1.4, // 图标缩放大小
+        fillColor: "orange", // 填充颜色
+        fillOpacity: 1 // 填充透明度
+      })
+      let marker = new BMap.Marker(point, { icon: myIcon });
+      self.map.addOverlay(marker);
+      if (bounce) {
+        marker.setAnimation(BMAP_ANIMATION_BOUNCE);
+      }
+      // self.map.setViewport([point]);
+    },
+    addSererMarker(point) { // 增加维修点
+      const self = this;
+      let marker = new BMap.Marker(point);
+      self.map.addOverlay(marker);
+      // self.map.setViewport([point]);
+      // marker.setAnimation(BMAP_ANIMATION_BOUNCE);
+    },
+    addMarkers1() {
+      const self = this;
+      // self.map.clearOverlays();  // 清除地图覆盖物
+      let pointArr = [];
+      self.selectedPrj.forEach((item) => {
+        let point = new BMap.Point(item.serLon, item.serLat);
+        pointArr.push(point);
+        self.addSererMarker(point);
+      })
+      self.map.setViewport(pointArr); // 自适应屏幕
     },
     getTopten() {
       const self = this;
@@ -193,8 +213,12 @@ export default {
           data: { prjCode: self.prj.prjCode }
         })
           .then(function (response) {
-            self.leftshow = true;
+            self.leftshow = true; // 左侧栏
             self.selectedPrj = response.data.data;
+            // self.selectedPrj.forEach(item => {
+            //   self.addSererMarker(new BMap.Point(item.serLon, item.serLat));
+            // })
+            self.addMarkers1();
           })
           .catch(function (error) {
             self.leftshow = false;
@@ -205,7 +229,7 @@ export default {
           });
       } else {
         self.$message({
-            message: '请填入工程代码',
+            message: '请填入工程名称',
           type: 'info'
         });      
       }
@@ -214,6 +238,7 @@ export default {
       const self = this;
       self.leftshow = false;
       Object.keys(self.prj).forEach(key => self.prj[key] = '');
+      // self.addMarkers(); // 回到原界面
     },
     insertvalue() {
       const self = this;
@@ -226,13 +251,14 @@ export default {
       //   });
       // })
       // if (submitable) {
-        insert();
+      //   insert();
       // } else {
       //   self.$message({
       //     message: '表格不能为空',
       //     type: 'warning'
       //   });
       // }
+      insert();
       function insert() {
         self.$axios({
           method: 'post',
@@ -286,9 +312,13 @@ export default {
         return (state.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
       };
     },
-    handleSelect(item) {
+    handleSelect(item) { // 选择一个地址，放到地图中心点
       const self = this;
       self.prj.prjCode = item.prjCode;
+      self.map.clearOverlays();
+      const point = new BMap.Point(item.prjLon, item.prjLat);
+      self.addMarker(point, true);
+      self.map.centerAndZoom(point, 15);
     },
     closeDialog() {
       const self = this;
