@@ -15,15 +15,15 @@
             <el-input clearable v-model="prj.prjCode" placeholder="请输入工程代码"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="getTopten">查询</el-button>
             <el-button type="info" @click="onCancel" icon="el-icon-circle-close"></el-button>
+            <el-button type="primary" @click="getTopten">查询</el-button>
             <el-button type="primary" @click="dialogTableVisible = true">新增</el-button>
           </el-form-item>
         </el-form>
       </div>
       <!-- dialog -->
       <el-dialog title="新增维修点" :visible.sync="dialogTableVisible" @close='closeDialog'>
-        <el-table :data="tableData">
+        <el-table :data="tableData" size="mini">
           <el-table-column property="serName" label="名称" width="150">
             <template slot-scope="scope">
               <el-input placeholder="serName" v-model="scope.row.serName"></el-input>
@@ -63,6 +63,7 @@
       <div v-show="leftshow" id="left">
         <!-- <h3>最近维修点</h3> -->
         <el-table height="540px" :data="selectedPrj"
+        size="small"
         :default-sort = "{prop: 'distance', order: 'ascending'}">
           <el-table-column
             prop="serName"
@@ -85,22 +86,7 @@ export default {
   data() {
     return {
       map: null, // 地图
-      companys: [ // 所有站点
-        // {
-        //   "prjCode": "PRJ_HkvlZ6_5M",
-        //   "prjName": "清山会议中心（二期）",
-        //   "cropCode": "QY_BykBSfIbQ",
-        //   "prjLat": 31.334337,
-        //   "prjLon": 120.433336
-        // },
-        // {
-        //   "prjCode": "PRJ_ByJ9jKLFb",
-        //   "prjName": "苏州普商仓储（中国国药B-3）",
-        //   "cropCode": "QY_HkVMoFItW",
-        //   "prjLat": 31.3567,
-        //   "prjLon": 120.816519
-        // }
-      ],
+      companys: [], // 所有站点
       prj: {
         prjCode: '',
         prjName: ''
@@ -116,7 +102,8 @@ export default {
         serLat: '',
         serLon: ''
       }],
-      timeout:  null
+      timeout:  null,
+      centerPoint: {} // 查询中心点
     };
   },
   created() {
@@ -131,8 +118,8 @@ export default {
     initMap() {
       const self = this;
       self.map = new BMap.Map('allmap');// 创建Map实例
-      // self.map.centerAndZoom(new BMap.Point(120.598736,31.304552), 11);// 初始化地图,设置中心点坐标和地图级别
-      self.map.centerAndZoom("苏州", 11); 
+      self.map.centerAndZoom(new BMap.Point(120.598736,31.304552), 11);// 初始化地图,设置中心点坐标和地图级别
+      // self.map.centerAndZoom("苏州", 11); 
       self.map.enableScrollWheelZoom(true);// 开启鼠标滚轮缩放
       let size = new BMap.Size(10, 10);
       self.map.addControl(new BMap.CityListControl({
@@ -150,7 +137,7 @@ export default {
       })
         .then((response) => {
           self.companys = response.data.data;
-          self.addMarkers();
+          self.addMarkers(); // 加载点
         })
         .catch((error) => {
           if (error) {
@@ -161,48 +148,44 @@ export default {
           }
         });
     },
-    addMarkers() {
+    addMarkers(cp = {}) {
       const self = this;
-      self.map.clearOverlays();  // 清除地图覆盖物
       let pointArr = [];
-      self.companys.forEach((item) => {
-        let point = new BMap.Point(item.prjLon, item.prjLat);
-        pointArr.push(point);
-        self.addMarker(point);
-      })
-      self.map.setViewport(pointArr); // 自适应屏幕
+      if (Object.keys(cp).length !== 0) {
+        let cpoint = new BMap.Point(cp.prjLon, cp.prjLat);
+        pointArr.push(cpoint);
+        self.selectedPrj.forEach((item) => {
+          let point = new BMap.Point(item.serLon, item.serLat);
+          pointArr.push(point);
+          self.addMarker(point, false, true);
+        })
+      } else {
+        self.map.clearOverlays();  // 清除地图覆盖物
+        self.companys.forEach((item) => {
+          let point = new BMap.Point(item.prjLon, item.prjLat);
+          pointArr.push(point);
+          self.addMarker(point);
+        })
+      }
+      self.map.setViewport(pointArr); // 所有点自适应屏幕
     },
-    addMarker(point, bounce) {
+    addMarker(point, bounce = false, isSerpoint = false) {
       const self = this;
-      let myIcon = new BMap.Symbol(BMap_Symbol_SHAPE_POINT, {
-        scale: 1.4, // 图标缩放大小
-        fillColor: "orange", // 填充颜色
-        fillOpacity: 1 // 填充透明度
-      })
-      let marker = new BMap.Marker(point, { icon: myIcon });
+      let marker;
+      if (isSerpoint) {
+        marker = new BMap.Marker(point); // 维修点标记
+      } else {
+        let myIcon = new BMap.Symbol(BMap_Symbol_SHAPE_POINT, {
+          scale: 1.4, // 图标缩放大小
+          fillColor: "orange", // 填充颜色
+          fillOpacity: 1 // 填充透明度
+        })
+        marker = new BMap.Marker(point, { icon: myIcon }); // 站点标记
+      }
       self.map.addOverlay(marker);
-      if (bounce) {
+      if (bounce) { // 查询特定站点加上弹跳动画
         marker.setAnimation(BMAP_ANIMATION_BOUNCE);
       }
-      // self.map.setViewport([point]);
-    },
-    addSererMarker(point) { // 增加维修点
-      const self = this;
-      let marker = new BMap.Marker(point);
-      self.map.addOverlay(marker);
-      // self.map.setViewport([point]);
-      // marker.setAnimation(BMAP_ANIMATION_BOUNCE);
-    },
-    addMarkers1() {
-      const self = this;
-      // self.map.clearOverlays();  // 清除地图覆盖物
-      let pointArr = [];
-      self.selectedPrj.forEach((item) => {
-        let point = new BMap.Point(item.serLon, item.serLat);
-        pointArr.push(point);
-        self.addSererMarker(point);
-      })
-      self.map.setViewport(pointArr); // 自适应屏幕
     },
     getTopten() {
       const self = this;
@@ -215,22 +198,19 @@ export default {
           .then(function (response) {
             self.leftshow = true; // 左侧栏
             self.selectedPrj = response.data.data;
-            // self.selectedPrj.forEach(item => {
-            //   self.addSererMarker(new BMap.Point(item.serLon, item.serLat));
-            // })
-            self.addMarkers1();
+            self.addMarkers(self.centerPoint);
           })
           .catch(function (error) {
             self.leftshow = false;
             self.$message({
-              message: '请确认工程代码后重试',
+              message: '请确认工程名称后重试',
               type: 'warning'
             });
           });
       } else {
         self.$message({
             message: '请填入工程名称',
-          type: 'info'
+          type: 'warning'
         });      
       }
     },
@@ -242,30 +222,28 @@ export default {
     },
     insertvalue() {
       const self = this;
-      // let submitable;
-      // self.tableData.map((item) => {
-      //   Object.values(item).filter((subItem) => {
-      //     if (subItem === '') {
-      //       return submitable = false;
-      //     }
-      //   });
-      // })
-      // if (submitable) {
-      //   insert();
-      // } else {
-      //   self.$message({
-      //     message: '表格不能为空',
-      //     type: 'warning'
-      //   });
-      // }
-      insert();
+      let submitable = true;
+      self.tableData.forEach((item) => {
+        Object.values(item).filter((subItem) => {
+          if (subItem === '') {
+            return submitable = false;
+          }
+        });
+      })
+      console.log(submitable)
+      if (submitable) {
+        insert();
+      } else {
+        self.$message({
+          message: '表格不能为空',
+          type: 'warning'
+        });
+      }
       function insert() {
         self.$axios({
           method: 'post',
           url: 'api/insertServices',
           data: {services: self.tableData}
-          // url: 'api/insertService',
-          // data: { ...self.tableData[0] }
         })
           .then(function (response) {
             if (response.data.code === '0000') {
@@ -314,11 +292,12 @@ export default {
     },
     handleSelect(item) { // 选择一个地址，放到地图中心点
       const self = this;
+      self.centerPoint = item;
       self.prj.prjCode = item.prjCode;
       self.map.clearOverlays();
       const point = new BMap.Point(item.prjLon, item.prjLat);
       self.addMarker(point, true);
-      self.map.centerAndZoom(point, 15);
+      self.map.centerAndZoom(point, 13);
     },
     closeDialog() {
       const self = this;
@@ -344,12 +323,13 @@ export default {
   #left {
     width: 20%;
     min-width: 200px;
-    height: 100%;
+    /* height: 60%; */
     position: absolute;
     z-index: 100;
     float: left;
     background: rgba(255, 255, 255, 0);
     margin-top: 10%;
+    opacity: 0.8;
   }
   #allmap {
     width: 100%;
