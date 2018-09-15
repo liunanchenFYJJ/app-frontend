@@ -41,17 +41,17 @@
           </el-table-column>
           <el-table-column property="serAddress" label="地址">
             <template slot-scope="scope">
-              <el-input placeholder="serAddress" v-model="scope.row.serAddress"></el-input>            
+              <el-input placeholder="serAddress" v-model="scope.row.serAddress"></el-input>
             </template>
           </el-table-column>
           <el-table-column property="serLat" label="纬度">
             <template slot-scope="scope">
-              <el-input placeholder="serLat" v-model="scope.row.serLat"></el-input>            
+              <el-input placeholder="serLat" v-model="scope.row.serLat"></el-input>
             </template>
           </el-table-column>
           <el-table-column property="serLon" label="经度">
             <template slot-scope="scope">
-              <el-input placeholder="serLon" v-model="scope.row.serLon"></el-input>            
+              <el-input placeholder="serLon" v-model="scope.row.serLon"></el-input>
             </template>
           </el-table-column>
         </el-table>
@@ -102,25 +102,25 @@ export default {
         serLat: '',
         serLon: ''
       }],
-      timeout:  null,
+      timeout: null,
       centerPoint: {} // 查询中心点
     };
   },
   created() {
     const self = this;
-    self.getAllPrj()
+    self.getAllPrj();
   },
   mounted() {
     const self = this;
-    self.initMap()  // 初始化地图
+    self.initMap(); // 初始化地图
   },
   methods: {
     initMap() {
       const self = this;
-      self.map = new BMap.Map('allmap');// 创建Map实例
-      self.map.centerAndZoom(new BMap.Point(120.598736,31.304552), 11);// 初始化地图,设置中心点坐标和地图级别
-      // self.map.centerAndZoom("苏州", 11); 
-      self.map.enableScrollWheelZoom(true);// 开启鼠标滚轮缩放
+      self.map = new BMap.Map('allmap'); // 创建Map实例
+      self.map.centerAndZoom(new BMap.Point(120.598736, 31.304552), 11); // 初始化地图,设置中心点坐标和地图级别
+      // self.map.centerAndZoom("苏州", 11);
+      self.map.enableScrollWheelZoom(true); // 开启鼠标滚轮缩放
       let size = new BMap.Size(10, 10);
       self.map.addControl(new BMap.CityListControl({
         anchor: BMAP_ANCHOR_TOP_RIGHT,
@@ -152,20 +152,20 @@ export default {
       const self = this;
       let pointArr = [];
       if (Object.keys(cp).length !== 0) {
-        let cpoint = new BMap.Point(cp.prjLon, cp.prjLat);
+        const cpoint = new BMap.Point(cp.prjLon, cp.prjLat);
         pointArr.push(cpoint);
         self.selectedPrj.forEach((item) => {
-          let point = new BMap.Point(item.serLon, item.serLat);
+          const point = new BMap.Point(item.serLon, item.serLat);
           pointArr.push(point);
           self.addMarker(point, false, true);
-        })
+        });
       } else {
-        self.map.clearOverlays();  // 清除地图覆盖物
+        self.map.clearOverlays(); // 清除地图覆盖物
         self.companys.forEach((item) => {
-          let point = new BMap.Point(item.prjLon, item.prjLat);
+          const point = new BMap.Point(item.prjLon, item.prjLat);
           pointArr.push(point);
           self.addMarker(point);
-        })
+        });
       }
       self.map.setViewport(pointArr); // 所有点自适应屏幕
     },
@@ -175,11 +175,11 @@ export default {
       if (isSerpoint) {
         marker = new BMap.Marker(point); // 维修点标记
       } else {
-        let myIcon = new BMap.Symbol(BMap_Symbol_SHAPE_POINT, {
+        const myIcon = new BMap.Symbol(BMap_Symbol_SHAPE_POINT, {
           scale: 1.4, // 图标缩放大小
-          fillColor: "orange", // 填充颜色
+          fillColor: 'orange', // 填充颜色
           fillOpacity: 1 // 填充透明度
-        })
+        });
         marker = new BMap.Marker(point, { icon: myIcon }); // 站点标记
       }
       self.map.addOverlay(marker);
@@ -195,12 +195,12 @@ export default {
           url: 'api/getNearServices',
           data: { prjCode: self.prj.prjCode }
         })
-          .then(function (response) {
+          .then((response) => {
             self.leftshow = true; // 左侧栏
             self.selectedPrj = response.data.data;
             self.addMarkers(self.centerPoint);
           })
-          .catch(function (error) {
+          .catch((error) => {
             self.leftshow = false;
             self.$message({
               message: '请确认工程名称后重试',
@@ -209,9 +209,9 @@ export default {
           });
       } else {
         self.$message({
-            message: '请填入工程名称',
+          message: '请填入工程名称',
           type: 'warning'
-        });      
+        }); 
       }
     },
     onCancel() { // 清空
@@ -229,8 +229,7 @@ export default {
             return submitable = false;
           }
         });
-      })
-      console.log(submitable)
+      });
       if (submitable) {
         insert();
       } else {
@@ -243,9 +242,9 @@ export default {
         self.$axios({
           method: 'post',
           url: 'api/insertServices',
-          data: {services: self.tableData}
+          data: { services: self.tableData }
         })
-          .then(function (response) {
+          .then((response) => {
             if (response.data.code === '0000') {
               self.$message({
                 message: '新增站点成功',
@@ -254,10 +253,10 @@ export default {
               self.dialogTableVisible = false;
             }
           })
-          .catch(function (error) {
+          .catch((error) => {
             self.$message({
-              message: 'error',
-              type: 'warning'
+              message: '新增维修点失败',
+              type: 'danger'
             });
           });
       }
@@ -271,7 +270,7 @@ export default {
         serAddress: '',
         serLat: '',
         serLon: ''
-      })
+      });
     },
     querySearchAsync(queryString, cb) {
       const self = this;
@@ -279,7 +278,7 @@ export default {
       let results = queryString ? company.filter(self.createStateFilter(queryString)) : company;
       results.map(item => {
         return item.value = item.prjName;
-      })
+      });
       clearTimeout(self.timeout);
       self.timeout = setTimeout(() => {
         cb(results);
