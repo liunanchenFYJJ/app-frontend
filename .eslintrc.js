@@ -28,6 +28,7 @@ module.exports = {
     "comma-dangle": [2, "never"], //最后不加逗号
     "max-len": 0, //忽略每行最大长度
     "arrow-body-style": ["error", "always"], // 箭头函数强制使用大括号
+    "no-param-reassign": 0,//允许给参数重新赋值
     // "consistent-return": 0, //忽略每个判断分支都要有return
     // don't require .vue extension when importing
     'import/extensions': ['error', 'always', {

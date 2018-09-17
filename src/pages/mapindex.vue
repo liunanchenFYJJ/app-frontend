@@ -115,7 +115,7 @@ export default {
     self.initMap(); // 初始化地图
   },
   methods: {
-    rowClick(item) {
+    rowClick(item) { // 点击tablerow
       const self = this;
       const point = new window.BMap.Point(item.serLon, item.serLat);
       self.addMarker(point, false, true, 1);
@@ -185,7 +185,8 @@ export default {
       if (isSerpoint) {
         const myIcon = new window.BMap.Icon('http://api.map.baidu.com/img/markers.png', new window.BMap.Size(23, 25), {
           offset: new window.BMap.Size(10, 25),
-          imageOffset: new window.BMap.Size(0, 0 - (12 * 25))
+          imageOffset: new window.BMap.Size(0, 0 - (10 * 25)),
+          anchor: new window.BMap.Size(10, 25)
         });
         if (i) {
           // self.map.clearOverlays();
@@ -193,7 +194,6 @@ export default {
         } else {
           marker = new window.BMap.Marker(point); // 维修点标记
         }
-        // marker.addEventListener('click', self.moreInfo);
       } else {
         const myIcon = new window.BMap.Symbol(window.BMap_Symbol_SHAPE_POINT, {
           scale: 1.4, // 图标缩放大小
@@ -201,6 +201,7 @@ export default {
           fillOpacity: 1 // 填充透明度
         });
         marker = new window.BMap.Marker(point, { icon: myIcon }); // 站点标记
+        // marker.addEventListener('click', self.moreInfo);
       }
       self.map.addOverlay(marker);
       if (bounce) { // 查询特定站点加上弹跳动画
