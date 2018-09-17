@@ -65,9 +65,24 @@
         size="small"
         @row-click="rowClick"
         :default-sort = "{prop: 'distance', order: 'ascending'}">
+          <!-- <el-table-column
+            label="id">
+            <template slot-scope="scope">
+              <span>{{scope.$index}}</span>
+            </template>
+          </el-table-column> -->
           <el-table-column
+            width="100"
             prop="serName"
             label="维修点">
+            <template slot-scope="scope">
+              <span class="limit8">{{scope.row.serName}}</span>
+            </template>
+          </el-table-column>
+          <el-table-column
+            width="90"
+            label="联系电话">
+            prop="phone"
           </el-table-column>
           <el-table-column
             width="94"
@@ -349,8 +364,8 @@ export default {
     text-align: center;
   }
   #left {
-    width: 20%;
-    min-width: 200px;
+    width: 24%;
+    min-width: 284px;
     /* height: 60%; */
     position: absolute;
     z-index: 100;
@@ -365,6 +380,12 @@ export default {
   }
   .el-input__icon {
     color: lightskyblue;
+  }
+  .limit8 {
+    width: 100px;
+    white-space: nowrap; /*不换行*/
+    overflow: hidden; /*截去超长*/
+    text-overflow: ellipsis; /*文末省略号*/
   }
   /* .el-table__body tr:hover > td {
     background-color: red;
