@@ -9,13 +9,13 @@
               @select="handleSelect"
               placeholder="请输入工程名称"
               style="width: 200px"
-            ></el-autocomplete>
+            ><i slot="suffix" @click="onCancel" class="el-input__icon el-icon-circle-close-outline"></i></el-autocomplete>
           </el-form-item>
           <el-form-item v-show="false">
-            <el-input clearable v-model="prj.prjCode" placeholder="请输入工程代码"></el-input>
+            <el-input v-model="prj.prjCode" placeholder="请输入工程代码"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="info" @click="onCancel">清除</el-button>
+            <!-- <el-button type="info" @click="onCancel">清除</el-button> -->
             <el-button type="primary" @click="getTopten">查询</el-button>
             <el-button type="primary" @click="dialogTableVisible = true">新增</el-button>
           </el-form-item>
@@ -61,9 +61,9 @@
         </span>
       </el-dialog>
       <div v-show="leftshow" id="left">
-        <!-- <h3>最近维修点</h3> -->
-        <el-table height="540px" :data="selectedPrj"
+        <el-table height="452px" :data="selectedPrj"
         size="small"
+        @row-click="rowClick"
         :default-sort = "{prop: 'distance', order: 'ascending'}">
           <el-table-column
             prop="serName"
@@ -115,6 +115,16 @@ export default {
     self.initMap(); // 初始化地图
   },
   methods: {
+    rowClick(item) {
+      const self = this;
+      const point = new window.BMap.Point(item.serLon, item.serLat);
+      self.addMarker(point, false, true, 1);
+      // self.moreInfo();
+    },
+    // moreInfo() {
+    //   const self = this;
+    //   console.log('moreInfo');
+    // },
     initMap() {
       const self = this;
       self.map = new window.BMap.Map('allmap'); // 创建Map实例
@@ -169,11 +179,21 @@ export default {
       }
       self.map.setViewport(pointArr); // 所有点自适应屏幕
     },
-    addMarker(point, bounce = false, isSerpoint = false) {
+    addMarker(point, bounce = false, isSerpoint = false, i = '') {
       const self = this;
       let marker;
       if (isSerpoint) {
-        marker = new window.BMap.Marker(point); // 维修点标记
+        const myIcon = new window.BMap.Icon('http://api.map.baidu.com/img/markers.png', new window.BMap.Size(23, 25), {
+          offset: new window.BMap.Size(10, 25),
+          imageOffset: new window.BMap.Size(0, 0 - (12 * 25))
+        });
+        if (i) {
+          // self.map.clearOverlays();
+          marker = new window.BMap.Marker(point, { icon: myIcon }); // 维修点标记
+        } else {
+          marker = new window.BMap.Marker(point); // 维修点标记
+        }
+        // marker.addEventListener('click', self.moreInfo);
       } else {
         const myIcon = new window.BMap.Symbol(window.BMap_Symbol_SHAPE_POINT, {
           scale: 1.4, // 图标缩放大小
@@ -302,8 +322,8 @@ export default {
       self.prj.prjCode = item.prjCode;
       self.map.clearOverlays();
       const point = new window.BMap.Point(item.prjLon, item.prjLat);
-      self.addMarker(point, true);
       self.map.centerAndZoom(point, 13);
+      self.addMarker(point, true);
     },
     closeDialog() {
       const self = this;
@@ -341,4 +361,13 @@ export default {
     width: 100%;
     height: 100%;
   }
+  .el-input__icon {
+    color: lightskyblue;
+  }
+  /* .el-table__body tr:hover > td {
+    background-color: red;
+  } */
+  /* .el-table--enable-row-hover .el-table__body tr:hover>td{
+    background-color: #212e3e !important;
+  } */
 </style>
