@@ -303,9 +303,10 @@ export default {
       const self = this;
       const company = self.companys;
       const results = queryString ? company.filter(self.createStateFilter(queryString)) : company;
-      results.forEach((item) => {
-        item.value = item.prjName;
-        // item = { ...item, value: item.prjName };
+      results.map((item) => {
+        const test = item;
+        test.value = item.prjName;
+        return test;
       });
       clearTimeout(self.timeout);
       self.timeout = setTimeout(() => {
