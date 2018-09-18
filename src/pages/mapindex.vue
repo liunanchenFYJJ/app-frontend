@@ -17,7 +17,7 @@
           <el-form-item>
             <!-- <el-button type="info" @click="onCancel">清除</el-button> -->
             <el-button type="primary" @click="getTopten">查询</el-button>
-            <el-button type="primary" @click="dialogTableVisible = true">新增</el-button>
+            <el-button type="primary" @click="jumpto">新增维修点</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -65,12 +65,16 @@
         size="small"
         @row-click="rowClick"
         :default-sort = "{prop: 'distance', order: 'ascending'}">
-          <!-- <el-table-column
+          <el-table-column
             label="id">
             <template slot-scope="scope">
-              <span>{{scope.$index}}</span>
+              <!-- <span>{{scope.$index}}</span> -->
+              <div class="imgDiv">
+                <img src="http://api.map.baidu.com/img/markers.png" alt="" style="position: absolute;clip:rect(50px 21px 75px 0px);background-repeat: no-repeat;">
+              </div>
+              <!-- <img src="http://api.map.baidu.com/img/markers.png" alt="" style="position: absolute;clip:rect((1 * 25)px 21px (2 * 25)px 0px);background-repeat: no-repeat;"> -->
             </template>
-          </el-table-column> -->
+          </el-table-column>
           <el-table-column
             width="100"
             prop="serName"
@@ -130,6 +134,10 @@ export default {
     self.initMap(); // 初始化地图
   },
   methods: {
+    jumpto() {
+      const self = this;
+      self.$router.push({ path: 'manage' });
+    },
     rowClick(item) { // 点击tablerow
       const self = this;
       const point = new window.BMap.Point(item.serLon, item.serLat);
@@ -381,16 +389,31 @@ export default {
   .el-input__icon {
     color: lightskyblue;
   }
+  .imgDiv {
+    /* position: relative;
+    height: 20px;
+    border: 1px solid #000; */
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+  }
   .limit8 {
     width: 100px;
     white-space: nowrap; /*不换行*/
     overflow: hidden; /*截去超长*/
     text-overflow: ellipsis; /*文末省略号*/
+    top: 50%;
+    left: 50%;
   }
   /* .el-table__body tr:hover > td {
     background-color: red;
   } */
   /* .el-table--enable-row-hover .el-table__body tr:hover>td{
     background-color: #212e3e !important;
+  } */
+  /* img {
+    position: absolute;
+    clip:rect(25px 21px 50px 0px);
+    background-repeat: no-repeat;
   } */
 </style>

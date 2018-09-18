@@ -8,7 +8,8 @@ import App from './App';
 import router from './router';
 
 Vue.use(ElementUI);
-Vue.prototype.$axios = axios;
+// Vue.prototype.$axios = axios;
+Object.defineProperty(Vue.prototype, '$axios', { value: axios });
 Vue.config.productionTip = false;
 
 /* eslint-disable no-new */
