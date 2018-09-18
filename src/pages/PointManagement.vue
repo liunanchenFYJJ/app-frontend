@@ -122,7 +122,7 @@ export default {
       const insert = function insertValue() {
         self.$axios({
           method: 'post',
-          url: 'api/insertServices',
+          url: '/insertServices',
           data: { services: self.tableData }
         })
           .then((response) => {

@@ -9,6 +9,7 @@ import router from './router';
 
 Vue.use(ElementUI);
 // Vue.prototype.$axios = axios;
+axios.defaults.baseURL = process.env.API_ROOT; // 根据不同环境配置请求路径
 Object.defineProperty(Vue.prototype, '$axios', { value: axios });
 Vue.config.productionTip = false;
 

@@ -165,7 +165,7 @@ export default {
       const self = this;
       self.$axios({
         method: 'post',
-        url: '/api/getAllPrj',
+        url: '/getAllPrj',
         data: {}
       })
         .then((response) => {
@@ -236,7 +236,7 @@ export default {
       if (self.prj.prjCode !== '') {
         self.$axios({
           method: 'post',
-          url: 'api/getNearServices',
+          url: '/getNearServices',
           data: { prjCode: self.prj.prjCode }
         })
           .then((response) => {
@@ -281,7 +281,7 @@ export default {
       const insert = function insertValue() {
         self.$axios({
           method: 'post',
-          url: 'api/insertServices',
+          url: '/insertServices',
           data: { services: self.tableData }
         })
           .then((response) => {
