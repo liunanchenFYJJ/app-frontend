@@ -17,7 +17,7 @@
           <el-form-item>
             <!-- <el-button type="info" @click="onCancel">清除</el-button> -->
             <el-button type="primary" @click="getTopten">查询</el-button>
-            <el-button type="primary" @click="jumpto">新增维修点</el-button>
+            <el-button @click="jumpto">新增维修点</el-button>
           </el-form-item>
         </el-form>
       </div>
