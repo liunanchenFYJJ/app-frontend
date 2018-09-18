@@ -1,7 +1,7 @@
 <template>
   <div class="box">
     <div id="allmap" v-show="showMap"></div>
-    <el-table :data="tableData" size="mini" max-height="48%">
+    <el-table :data="tableData" size="mini" max-height="370">
         <el-table-column property="serName" label="名称" width="300">
         <template slot-scope="scope">
             <el-input placeholder="serName" v-model="scope.row.serName"></el-input>
