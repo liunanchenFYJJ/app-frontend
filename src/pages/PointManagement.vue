@@ -4,32 +4,32 @@
     <el-table :data="tableData" size="mini" max-height="370">
         <el-table-column property="serName" label="名称" width="300">
         <template slot-scope="scope">
-            <el-input placeholder="serName" v-model="scope.row.serName"></el-input>
+            <el-input placeholder="维修点名称" v-model="scope.row.serName"></el-input>
         </template>
         </el-table-column>
         <el-table-column property="serPassword" label="密码">
         <template slot-scope="scope">
-            <el-input placeholder="serPassword" v-model="scope.row.serPassword"></el-input>
+            <el-input placeholder="密码" v-model="scope.row.serPassword"></el-input>
         </template>
         </el-table-column>
         <el-table-column property="phone" label="手机号">
         <template slot-scope="scope">
-            <el-input placeholder="phone" v-model="scope.row.phone"></el-input>
+            <el-input placeholder="联系电话" v-model="scope.row.phone"></el-input>
         </template>
         </el-table-column>
         <el-table-column property="serAddress" label="地址" width="300">
         <template slot-scope="scope">
-            <el-input placeholder="serAddress" v-model="scope.row.serAddress" @focus="fpoint(scope)"></el-input>
+            <el-input placeholder="维修点地址" v-model="scope.row.serAddress" @focus="fpoint(scope)"></el-input>
         </template>
         </el-table-column>
         <el-table-column property="serLat" label="纬度">
         <template slot-scope="scope">
-            <el-input :disabled="true" placeholder="serLat" v-model="scope.row.serLat"></el-input>
+            <el-input :disabled="true" placeholder="纬度" v-model="scope.row.serLat"></el-input>
         </template>
         </el-table-column>
         <el-table-column property="serLon" label="经度">
         <template slot-scope="scope">
-            <el-input :disabled="true" placeholder="serLon" v-model="scope.row.serLon"></el-input>
+            <el-input :disabled="true" placeholder="经度" v-model="scope.row.serLon"></el-input>
         </template>
         </el-table-column>
     </el-table>
