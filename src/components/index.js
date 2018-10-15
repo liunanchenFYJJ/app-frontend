@@ -1,7 +1,27 @@
+import Vue from 'vue';
 import CustomInput from './customInput/index';
+import TestCom from './testCom/index';
 
-const components = [ CustomInput ];
+const components = [
+  CustomInput,
+  TestCom
+];
 
-module.exports = { CustomInput };
+components.forEach((component) => {
+    // components.install = function(Vue) {
+        Vue.component(component.name, component);
+        // Vue.use(component);
+    // }
+});
 
-// module.exports.default = module.exports;
+// const a = {
+//   version: '0.0.1',
+//   CustomInput,
+//   TestCom
+// };
+
+export default {
+  version: '0.0.1',
+  CustomInput,
+  TestCom
+};
