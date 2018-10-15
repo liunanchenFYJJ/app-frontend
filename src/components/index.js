@@ -1,6 +1,9 @@
 import Vue from 'vue';
 import CustomInput from './customInput/index';
 import TestCom from './testCom/index';
+// 异步组件？
+// const CustomInput = (resolve) => { require.ensure([], () => { require('./customInput/index') }) }
+// const TestCom = (resolve) => { require.ensure([], () => { require('./testCom/index') }) }
 
 const components = [
   CustomInput,

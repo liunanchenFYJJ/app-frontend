@@ -16,6 +16,7 @@ Vue.use(MyComponents);
 // Vue.use(TestCom);
 // Vue.use(CustomInput);
 
+// console.log(MyComponents);
 
 // 不是基于vue.js 编写的插件 挂载到vue 原型上
 // Vue.prototype.$axios = axios;

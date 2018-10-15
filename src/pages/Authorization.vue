@@ -1,7 +1,7 @@
 <template>
   <div class="bg" :class="{red: isRed}" :style="{fontSize: postFontSize + 'em'}">
     Authorization
-    <TestCom :msg1="msg" @large-textt="large"></TestCom>
+    <TestCom :msg1="msg" @large-textt="large">{{msg}}</TestCom>
     <!-- <TestCom :msg1="msg" @large-textt="postFontSize += $event"></TestCom> -->
     <!-- <CustomInput v-model="customMsg" /> -->
     <!-- v-model 分解写法 -->
