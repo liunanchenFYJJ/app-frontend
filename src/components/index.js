@@ -8,10 +8,8 @@ const components = [
 ];
 
 components.forEach((component) => {
-    // components.install = function(Vue) {
-        Vue.component(component.name, component);
-        // Vue.use(component);
-    // }
+  Vue.component(component.name, component);
+// Vue.use(component);
 });
 
 // const a = {

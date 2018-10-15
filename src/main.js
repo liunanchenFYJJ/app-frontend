@@ -7,10 +7,14 @@ import axios from 'axios';
 import App from './App';
 import router from './router';
 import MyComponents from './components'; // 模仿ElementUI 将所有的组建全部导入
+// import TestCom from './components/testCom'; // 单独引入
+// import CustomInput from './components/customInput';
 
 // Vue.use() 基于vue.js 编写的插件
 Vue.use(ElementUI);
 Vue.use(MyComponents);
+// Vue.use(TestCom);
+// Vue.use(CustomInput);
 
 
 // 不是基于vue.js 编写的插件 挂载到vue 原型上
