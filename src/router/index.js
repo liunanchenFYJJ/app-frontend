@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-// import HelloWorld from '@/components/HelloWorld';
 import MapIndex from '@/pages/MapIndex';
 import PointManagement from '@/pages/PointManagement';
 import Authorization from '@/pages/Authorization';
@@ -14,8 +13,6 @@ export default new Router({
     {
       path: '/',
       redirect: '/map'
-      // name: 'HelloWorld',
-      // component: HelloWorld
     },
     {
       path: '/map',
