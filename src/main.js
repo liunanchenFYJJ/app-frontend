@@ -9,6 +9,7 @@ import router from './router';
 import MyComponents from './components'; // 模仿ElementUI 将所有的组建全部导入
 // import TestCom from './components/testCom'; // 单独引入
 // import CustomInput from './components/customInput';
+import 'animate.css/animate.css' // 引入animate.css
 
 // Vue.use() 基于vue.js 编写的插件
 Vue.use(ElementUI);
