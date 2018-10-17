@@ -1,6 +1,7 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue';
+import Vuex from 'vuex';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import axios from 'axios';
@@ -12,11 +13,12 @@ import MyComponents from './components'; // 模仿ElementUI 将所有的组建�
 // import CustomInput from './components/customInput';
 
 // Vue.use() 基于vue.js 编写的插件
+Vue.use(Vuex);
 Vue.use(ElementUI);
 Vue.use(MyComponents);
 // Vue.use(TestCom);
 // Vue.use(CustomInput);
-
+// console.log(Vuex);
 // console.log(MyComponents);
 
 // 不是基于vue.js 编写的插件 挂载到vue 原型上
