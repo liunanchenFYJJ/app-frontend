@@ -3,17 +3,19 @@ import Router from 'vue-router';
 import MapIndex from '@/pages/MapIndex';
 import PointManagement from '@/pages/PointManagement';
 import Authorization from '@/pages/Authorization';
+// 模仿eleme的路由都在views文件夹中
+import Home from '@/views/Home';
 // 异步路由？
 
 Vue.use(Router);
 
 export default new Router({
-  // mode: 'history',
+  mode: 'history',
   // base: 'prod',
   routes: [
     {
       path: '/',
-      redirect: '/map'
+      redirect: '/home'
     },
     {
       path: '/map',
@@ -35,6 +37,11 @@ export default new Router({
       component: Authorization
       // component: () => { import('@/pages/Authorization'); }
       // component: (resolve) => { require(['@/pages/Authorization'], resolve) }
+    },
+    {
+      path: '/home',
+      name: 'index',
+      component: Home
     }
   ]
 });

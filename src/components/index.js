@@ -1,10 +1,12 @@
 import Vue from 'vue';
 import CustomInput from './customInput/index';
 import TestCom from './testCom/index';
+import EFooter from './footer/index';
 
 const components = [
   CustomInput,
-  TestCom
+  TestCom,
+  EFooter
   // 异步组件？
   // const CustomInput = (resolve) => { require.ensure([], () => { require('./customInput/index') }) }
   // const TestCom = (resolve) => { require.ensure([], () => { require('./testCom/index') }) }
@@ -24,5 +26,6 @@ components.forEach((component) => {
 export default {
   version: '0.0.1',
   CustomInput,
-  TestCom
+  TestCom,
+  EFooter
 };

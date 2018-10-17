@@ -6,6 +6,7 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import axios from 'axios';
 import 'animate.css/animate.css'; // 引入animate.css
+import 'font-awesome/css/font-awesome.css'; // 引入font-awesome
 import App from './App';
 import router from './router';
 import MyComponents from './components'; // 模仿ElementUI 将所有的组建全部导入
