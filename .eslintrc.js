@@ -25,6 +25,7 @@ module.exports = {
   },
   // add your custom rules here
   rules: {
+    "eol-last": 0,
     "comma-dangle": [2, "never"], //最后不加逗号
     "max-len": 0, //忽略每行最大长度
     "arrow-body-style": ["error", "always"], // 箭头函数强制使用大括号

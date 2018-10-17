@@ -39,7 +39,7 @@ export default {
     // console.log(this); // this 是一个Vue 实例,一直存在，跟生命周期无关
   },
   created() {
-    console.log(this);
+    console.log(this.$data);
   },
   methods: {
     large(post) {
