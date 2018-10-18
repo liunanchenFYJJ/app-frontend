@@ -16,7 +16,7 @@
 </template>
 <script>
 export default {
-  name: "EFooter",
+  name: 'EFooter',
   props: {
     navilist: {
       type: Array

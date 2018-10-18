@@ -68,6 +68,6 @@ export default new Router({
           component: Profile
         }
       ]
-    },
+    }
   ]
 });

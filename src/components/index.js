@@ -2,11 +2,13 @@ import Vue from 'vue';
 import CustomInput from './customInput/index';
 import TestCom from './testCom/index';
 import EFooter from './footer/index';
+import EHeader from './header/index';
 
 const components = [
   CustomInput,
   TestCom,
-  EFooter
+  EFooter,
+  EHeader
   // 异步组件？
   // const CustomInput = (resolve) => { require.ensure([], () => { require('./customInput/index') }) }
   // const TestCom = (resolve) => { require.ensure([], () => { require('./testCom/index') }) }
@@ -27,5 +29,6 @@ export default {
   version: '0.0.1',
   CustomInput,
   TestCom,
-  EFooter
+  EFooter,
+  EHeader
 };
