@@ -4,33 +4,19 @@
             <el-container>
                 <el-header>Header</el-header>
                 <el-main>Main
-                    <i v-for="i in 60" :key="i" class="fa fa-camera-retro fa-5x fa-spin"></i>
+                    <i v-for="i in 60" :key="i" class="fa fa-camera-retro fa-5x"></i>
                 </el-main>
                 <el-footer>Footer</el-footer>
             </el-container>
-            <e-footer :navilist="footerlist"></e-footer>
         </div>
     </div>
 </template>
 <script>
 export default {
-  name: 'Home',
+  name: "Home",
   data() {
     return {
-      footerlist: [
-        {
-          title: '首页'
-        },
-        {
-          title: '发现'
-        },
-        {
-          title: '订单'
-        },
-        {
-          title: '我的'
-        }
-      ]
+
     };
   }
 };

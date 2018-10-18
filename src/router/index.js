@@ -4,7 +4,11 @@ import MapIndex from '@/pages/MapIndex';
 import PointManagement from '@/pages/PointManagement';
 import Authorization from '@/pages/Authorization';
 // 模仿eleme的路由都在views文件夹中
+import Index from '@/views/Index';
 import Home from '@/views/Home';
+import Discover from '@/views/Discover';
+import Order from '@/views/Order';
+import Profile from '@/views/Profile';
 // 异步路由？
 
 Vue.use(Router);
@@ -15,7 +19,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: '/home'
+      redirect: '/index/home'
     },
     {
       path: '/map',
@@ -39,9 +43,31 @@ export default new Router({
       // component: (resolve) => { require(['@/pages/Authorization'], resolve) }
     },
     {
-      path: '/home',
+      path: '/index',
       name: 'index',
-      component: Home
-    }
+      component: Index,
+      children: [
+        {
+          path: 'home',
+          name: 'home',
+          component: Home
+        },
+        {
+          path: 'discover',
+          name: 'discover',
+          component: Discover
+        },
+        {
+          path: 'order',
+          name: 'order',
+          component: Order
+        },
+        {
+          path: 'profile',
+          name: 'profile',
+          component: Profile
+        }
+      ]
+    },
   ]
 });
