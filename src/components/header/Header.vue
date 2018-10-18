@@ -19,31 +19,31 @@
 </template>
 <script>
 export default {
-  name: "EHeader",
+  name: 'EHeader',
   data() {
     return {};
   },
   methods: {
-    handleScroll(e) {
-      const self = this;
-      var top = document.querySelector(".totop");
-    //   console.log(top.style);
-    //   console.log(e.target.scrollTop);
-      if (e.target.scrollTop >= 60) {
-        // self.istotop = true;
-        //     //   alert('sd')
-        top.style.position = "fixed";
-        top.style.top = "10px";
-        top.style.width = "90%";
-      } else {
-        // self.istotop = false;
-        top.style.position = "relative";
-        top.style.top = 0;
-        top.style.width = "100%";
-      }
-    },
+    // handleScroll(e) {
+    //   const self = this;
+    //   var top = document.querySelector('.totop');
+    // //   console.log(top.style);
+    // //   console.log(e.target.scrollTop);
+    //   if (e.target.scrollTop >= 60) {
+    //     // self.istotop = true;
+    //     //     //   alert('sd')
+    //     top.style.position = "fixed";
+    //     top.style.top = "10px";
+    //     top.style.width = "90%";
+    //   } else {
+    //     // self.istotop = false;
+    //     top.style.position = "relative";
+    //     top.style.top = 0;
+    //     top.style.width = "100%";
+    //   }
+    // },
     chooseAdd() {
-        console.log('choose your city');
+      console.log('choose your city');
     }
   }
 };
