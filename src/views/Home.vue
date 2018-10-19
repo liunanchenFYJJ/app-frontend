@@ -12,9 +12,14 @@
                     </el-col>
                 </el-row>
                 <el-row :gutter="10">
-                    <el-col :span="24">1</el-col>
+                    <el-col :span="24">广告轮播</el-col>
                 </el-row>
-                <i v-for="i in 60" :key="i" class="fa fa-camera-retro fa-4x"></i>
+                <el-row :gutter="10">
+                    <el-col v-for="(item, i) in infolist" :key="i" :span="24">
+                        <shopinfo></shopinfo>
+                    </el-col>
+                </el-row>
+                <!-- <i v-for="i in 60" :key="i" class="fa fa-camera-retro fa-4x"></i> -->
             </main>
             <!-- <el-footer>Footer</el-footer> -->
         </section>
@@ -44,6 +49,10 @@ export default {
       ]
     };
   },
+  created() {
+    const self = this;
+    self.getAllstore();
+  },
   mounted() {
     // this.handleAa();
     // document.addEventListener('touchmove', this.handleAa, false);
@@ -69,11 +78,21 @@ export default {
         top.style.top = 0;
         top.style.width = '100%';
       }
-    }
+    },
     // handleAa() {
     //     var a = document.querySelector('#aa');
     //     console.log(a);
     // }
+    getAllstore() {
+      const self = this;
+      self.$axios({
+        method: 'get',
+        url: 'https://h5.ele.me/restapi/shopping/v3/restaurants?latitude=31.29834&longitude=120.583191&offset=0&limit=8&extras[]=activities&extras[]=tags&extra_filters=home&rank_id&terminal=h5'
+      })
+        .then((response) => {
+          console.log(response);
+        });
+    }
   }
 };
 </script>
