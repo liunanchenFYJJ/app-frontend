@@ -7,11 +7,8 @@
             <main>
                 <e-carousel></e-carousel>
                 <el-row :gutter="10">
-                    <el-col :span="12">
-                        <div style="height: 150px;background-color:blue"></div>
-                    </el-col>
-                    <el-col :span="12">
-                        <div style="height: 150px;background-color:blue"></div>
+                    <el-col v-for="(item, i) in infolist" :key="i" :span="12">
+                        <centerad :adInfo=item></centerad>
                     </el-col>
                 </el-row>
                 <el-row :gutter="10">
@@ -30,7 +27,21 @@ export default {
   name: 'Home',
   data() {
     return {
-      istotop: true
+      istotop: true,
+      infolist: [
+        {
+          title: '品质套餐',
+          subtitle: '搭配齐全吃得好',
+          action: '立即抢购',
+          imgsrc: 'https://fuss10.elemecdn.com/d/d4/16ff085900d62b8d60fa7e9c6b65dpng.png?imageMogr/format/webp/thumbnail/!240x160r/gravity/Center/crop/240x160/'
+        },
+        {
+          title: '限量抢购',
+          subtitle: '超值美味9.9元起',
+          action: '1493人正在抢',
+          imgsrc: 'https://fuss10.elemecdn.com/b/e1/0fa0ed514c093a7138b0b9a50d61fpng.png?imageMogr/format/webp/thumbnail/!240x160r/gravity/Center/crop/240x160/'
+        }
+      ]
     };
   },
   mounted() {
@@ -38,6 +49,9 @@ export default {
     // document.addEventListener('touchmove', this.handleAa, false);
   },
   methods: {
+    // fjumptoad(i) {
+    //   console.log(i)
+    // },
     handleScroll(e) {
     //   const self = this;
       const top = document.querySelector('.totop');

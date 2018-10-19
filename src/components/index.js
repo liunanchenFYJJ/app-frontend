@@ -4,13 +4,15 @@ import TestCom from './testCom/index';
 import EFooter from './footer/index';
 import EHeader from './header/index';
 import ECarousel from './carousel/index';
+import Centerad from './centerad/index';
 
 const components = [
   CustomInput,
   TestCom,
   EFooter,
   EHeader,
-  ECarousel
+  ECarousel,
+  Centerad
   // 异步组件？
   // const CustomInput = (resolve) => { require.ensure([], () => { require('./customInput/index') }) }
   // const TestCom = (resolve) => { require.ensure([], () => { require('./testCom/index') }) }
@@ -33,5 +35,6 @@ export default {
   TestCom,
   EFooter,
   EHeader,
-  ECarousel
+  ECarousel,
+  Centerad
 };
