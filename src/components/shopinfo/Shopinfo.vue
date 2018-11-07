@@ -37,17 +37,17 @@ export default {
 </script>
 <style scoped>
 img {
-    width: 80px;
-    height: 80px;
+  width: 80px;
+  height: 80px;
 }
 h3 {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 .iclass {
-    background-color: orange;
+  background-color: orange;
 }
 span {
-    /* border: solid 1px black; */
+  /* border: solid 1px black; */
 }
 </style>

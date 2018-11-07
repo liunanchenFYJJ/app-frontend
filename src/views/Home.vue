@@ -15,7 +15,7 @@
                     <el-col :span="24">广告轮播</el-col>
                 </el-row>
                 <el-row :gutter="10">
-                    <el-col v-for="(item, i) in infolist" :key="i" :span="24">
+                    <el-col v-for="(item, i) in 10" :key="i" :span="24">
                         <shopinfo></shopinfo>
                     </el-col>
                 </el-row>
@@ -51,7 +51,7 @@ export default {
   },
   created() {
     const self = this;
-    self.getAllstore();
+    // self.getAllstore();
   },
   mounted() {
     // this.handleAa();
