@@ -119,7 +119,7 @@ export default {
           return false;
         });
       });
-      const insert = function insertValue() {
+      const insert = function () {
         self.$axios({
           method: 'post',
           url: '/insertServices',

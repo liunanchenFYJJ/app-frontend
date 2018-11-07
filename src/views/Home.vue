@@ -50,7 +50,7 @@ export default {
     };
   },
   created() {
-    const self = this;
+    // const self = this;
     // self.getAllstore();
   },
   mounted() {

@@ -5,7 +5,7 @@
 </template>
 
 <script>
-// import querystring from 'querystring' 
+// import querystring from 'querystring'
 
 export default {
   data() {
@@ -21,7 +21,7 @@ export default {
     test() {
       console.log('sd');
       const self = this;
-      let testdata = { username: 'jj', password: '123456' }
+      const testdata = { username: 'jj', password: '123456' };
       self.$axios({
         method: 'post',
         url: '/api/sys/login',
@@ -31,7 +31,7 @@ export default {
         .then((response) => {
           console.log(response);
         })
-        .catch(function(error) {
+        .catch((error) => {
           console.log(error);
         });
     }

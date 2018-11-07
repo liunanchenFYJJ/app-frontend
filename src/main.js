@@ -7,13 +7,13 @@ import 'element-ui/lib/theme-chalk/index.css';
 import axios from 'axios';
 import 'animate.css/animate.css'; // 引入animate.css
 import 'font-awesome/css/font-awesome.css'; // 引入font-awesome
+// 处理axios请求格式
+import querystring from 'querystring';
 import App from './App';
 import router from './router';
 import MyComponents from './components'; // 模仿ElementUI 将所有的组建全部导入
 // import TestCom from './components/testCom'; // 单独引入
 // import CustomInput from './components/customInput';
-// 处理axios请求格式
-import querystring from 'querystring' 
 
 
 // Vue.use() 基于vue.js 编写的插件
@@ -28,13 +28,13 @@ Vue.use(MyComponents);
 // 不是基于vue.js 编写的插件 挂载到vue 原型上
 // Vue.prototype.$axios = axios;
 // 关于不同环境加载不同url问题？
-// axios.defaults.baseURL = process.env.API_ROOT; // 根据不同环境配置请求路径 
+// axios.defaults.baseURL = process.env.API_ROOT; // 根据不同环境配置请求路径
 // 通过配置好一个axios实例，提供在全局调用
 const axiosinstance = axios.create({
-  transformRequest: [data => {  
-    return querystring.stringify(data);  
-  }]  
-})
+  transformRequest: [(data) => {
+    return querystring.stringify(data);
+  }]
+});
 Object.defineProperty(Vue.prototype, '$axios', { value: axiosinstance });
 
 Vue.config.productionTip = false;
