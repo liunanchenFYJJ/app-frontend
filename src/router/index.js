@@ -5,6 +5,7 @@ import PointManagement from '@/pages/PointManagement';
 import Authorization from '@/pages/Authorization';
 // 模仿eleme的路由都在views文件夹中
 import Index from '@/views/Index';
+import Login from '@/views/Login';
 import Home from '@/views/Home';
 import Discover from '@/views/Discover';
 import Order from '@/views/Order';
@@ -20,6 +21,11 @@ export default new Router({
     {
       path: '/',
       redirect: '/index/home'
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: Login
     },
     {
       path: '/map',
