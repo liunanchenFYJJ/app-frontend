@@ -1,3 +1,5 @@
 <template>
-    <div>profile</div>
+    <div>
+      <nav-header>我的</nav-header>
+    </div>
 </template>

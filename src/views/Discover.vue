@@ -8,6 +8,7 @@
 // import querystring from 'querystring'
 
 export default {
+  name: 'Discover',
   data() {
     return {
 
@@ -15,11 +16,12 @@ export default {
   },
   created() {
     // const self = this;
-    // self.test();
+    // 此处因为是异步操作，所以打印username的时候，test_ajax()还没有执行完成
+    // const username = self.test_ajax();
+    // console.log(username);
   },
   methods: {
     test() {
-      console.log('sd');
       const self = this;
       const testdata = { username: 'jj', password: '123456' };
       self.$axios({
@@ -29,11 +31,19 @@ export default {
         data: testdata
       })
         .then((response) => {
-          console.log(response);
+          // console.log(response.data.data.username);
+          return response.data.data.username;
         })
         .catch((error) => {
           console.log(error);
         });
+    },
+    test_ajax() {
+      const testdata = { username: 'jj', password: '123456' };
+      window.$.post('/api/sys/login', testdata, (e) => {
+        // console.log(e.data.username);
+        return e.data.username;
+      });
     }
   }
 };

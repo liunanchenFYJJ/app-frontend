@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="index">
         <router-view/>
         <e-footer :navilist="footerlist"></e-footer>
     </div>
@@ -32,3 +32,9 @@ export default {
   }
 };
 </script>
+<style scoped>
+.index {
+  background-color: lightgray;
+  height: 800px;
+}
+</style>
