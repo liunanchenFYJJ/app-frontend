@@ -10,11 +10,18 @@ import Home from '@/views/Home';
 import Discover from '@/views/Discover';
 import Order from '@/views/Order';
 import Profile from '@/views/Profile';
-// 异步路由？
+
+// 路由懒加载？
+// const Index = () => { import('@/views/Index'); };
+// const Login = () => { import('@/views/Login'); };
+// const Home = () => { import('@/views/Home'); };
+// const Discover = () => { import('@/views/Discover'); };
+// const Order = () => { import('@/views/Order'); };
+// const Profile = () => { import('@/views/Profile'); };
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   // base: 'prod',
   routes: [
@@ -65,7 +72,7 @@ export default new Router({
         },
         {
           path: 'order',
-          name: 'order',
+          name: 'Order', // 命名路由
           component: Order
         },
         {
@@ -77,3 +84,18 @@ export default new Router({
     }
   ]
 });
+
+router.beforeEach((to, from, next) => {
+  // console.log(to);
+  // console.log(from);
+  // console.log(next);
+  // 实现先登陆
+  if (to.path === '/login') {
+    next();
+  } else {
+    console.log('---login firsr---');
+    next('/login');
+  }
+});
+
+export default router;
