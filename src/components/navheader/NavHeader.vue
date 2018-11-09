@@ -1,12 +1,18 @@
 <template>
   <el-row class="bgcolor">
-    <i class="fa fa-chevron-left"></i>
+    <i @click="goback" class="fa fa-chevron-left"></i>
     <span><slot></slot></span>
   </el-row>
 </template>
 <script>
 export default {
-  name: 'NavHeader'
+  name: 'NavHeader',
+  methods: {
+    goback() {
+      const self = this;
+      self.$router.go(-1);
+    }
+  }
 };
 </script>
 <style scoped>
