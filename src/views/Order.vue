@@ -1,7 +1,6 @@
 <template>
     <div class="outer">
         <nav-header>订单</nav-header>
-        <el-button @click="gotoLogin" class="btn" type="success">立即登陆</el-button>
     </div>
 </template>
 <script>
@@ -13,12 +12,7 @@ export default {
     };
   },
   methods: {
-    gotoLogin() {
-      const self = this;
-      // 两种跳转方法
-      // self.$router.push('/login');
-      self.$router.push({ name: 'Login' });
-    }
+
   }
 };
 </script>

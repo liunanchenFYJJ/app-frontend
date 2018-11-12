@@ -69,10 +69,11 @@ export default {
 }
 button {
   width: 100%;
-  height: 3.2em;
+  /* height: 3.2em; */
+  height: 2rem;
   color: white;
   background-color: rgb(114, 205, 110);
-  margin-top: 30px;
+  margin-top: 1.875rem;
   border: none;
   border-radius: 5px;
 }
