@@ -1,6 +1,7 @@
 <template>
     <div class="outer">
         <nav-header>订单</nav-header>
+        {{result}}
     </div>
 </template>
 <script>
@@ -8,11 +9,21 @@ export default {
   name: 'Order',
   data() {
     return {
-
+      result: '',
+      username: ''
     };
   },
   methods: {
 
+  },
+  beforeRouteEnter(to, from, next) {
+    next((vm) => {
+      // console.log(vm);
+      const self = vm;
+      setTimeout(() => {
+        self.result = 'hello,jj';
+      }, 2000);
+    });
   }
 };
 </script>
