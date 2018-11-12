@@ -45,8 +45,10 @@ export default {
     login() {
       const self = this;
       // cookie 过期时间？
+      console.log(self.$route);
       document.cookie = `auth=${self.phonenum}`;
-      self.$router.push({ name: 'Order' });
+      // self.$router.push({ name: 'Order' });
+      self.$router.push(self.$route.query.redirect || '/'); // 登陆后回到刚刚想要访问的页面
     }
   }
 };

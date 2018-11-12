@@ -73,12 +73,14 @@ const router = new Router({
         {
           path: 'order',
           name: 'Order', // 命名路由
-          component: Order
+          component: Order,
+          meta: { auth: true } // 需要登陆权限
         },
         {
           path: 'profile',
           name: 'profile',
-          component: Profile
+          component: Profile,
+          meta: { auth: true }
         }
       ]
     }
@@ -86,15 +88,24 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-  // console.log(to);
+  // console.log(to.meta);
   // console.log(from);
   // console.log(next);
   // 实现先登陆
-  if (to.path === '/login') {
+  if (to.meta.auth) { // 需要登陆
+    console.log('此页面需要登陆！');
+    const user = document.cookie.split('=')[1]; // 取到user
+    console.log(user);
+    if (user) {
+      next();
+    } else {
+      next({
+        path: '/login',
+        query: { redirect: to.fullPath }
+      });
+    }
+  } else { // 不需要登陆
     next();
-  } else {
-    console.log('---login firsr---');
-    next('/login');
   }
 });
 
