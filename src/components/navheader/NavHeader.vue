@@ -17,14 +17,14 @@ export default {
 </script>
 <style scoped>
 .bgcolor {
-  height: 3em;
+  height: 4rem;
   background: black;
   /* text-align: center; */
-  padding: 8px;
+  padding: 1rem;
 }
 span,i {
   color: aliceblue;
-  font-size: 1.4em;
+  font-size: 1.875rem;
 }
 span {
   margin-left: 36%;
