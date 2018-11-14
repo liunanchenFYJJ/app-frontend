@@ -7,6 +7,7 @@ import Authorization from '@/pages/Authorization';
 import Index from '@/views/Index';
 import Login from '@/views/Login';
 import Home from '@/views/Home';
+import Shopdetail from '@/views/Shopdetail';
 import Discover from '@/views/Discover';
 import Order from '@/views/Order';
 import Profile from '@/views/Profile';
@@ -83,6 +84,11 @@ const router = new Router({
           meta: { auth: true }
         }
       ]
+    },
+    {
+      path: '/shopdetail',
+      name: 'shopdetail',
+      component: Shopdetail
     }
   ]
 });
