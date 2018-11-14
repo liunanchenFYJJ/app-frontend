@@ -32,6 +32,7 @@ module.exports = {
     "camelcase": 0, // 忽略驼峰命名
     "func-names": ["error", "never"], // 允许匿名函数
     "no-console": 0, // 允许console.log,开发完成要去掉
+    // "arrow-body-style": ["error", "never"],
     // "no-param-reassign": ["error", { "props": false }], // 可以操作先参数属性
     // "no-param-reassign": 0, // 允许给参数重新赋值
     // "consistent-return": 0, //忽略每个判断分支都要有return

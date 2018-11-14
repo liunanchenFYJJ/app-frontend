@@ -5,7 +5,7 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
   state: {
-    count: 1
+    count: 0
   },
   getters: {
 
@@ -13,10 +13,18 @@ const store = new Vuex.Store({
   mutations: {
     increment(state) {
       state.count += 1;
+    },
+    decrement(state, pace) {
+      state.count -= pace;
     }
   },
   actions: {
-    
+    increment({ commit }) {
+      commit('increment');
+    },
+    decrement(context, payload) {
+      context.commit('decrement', payload);
+    }
   }
 });
 

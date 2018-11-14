@@ -1,4 +1,5 @@
 <template>
+  <div  @click="gotodetail">
     <el-row>
         <el-col :span="6">
             <div style="width: 100%;">
@@ -24,6 +25,7 @@
             </div>
         </el-col>
     </el-row>
+  </div>
 </template>
 <script>
 export default {
@@ -32,6 +34,12 @@ export default {
     return {
       ratevalue: 3
     };
+  },
+  methods: {
+    gotodetail() {
+      const self = this;
+      self.$router.push({ name: 'shopdetail' });
+    }
   }
 };
 </script>

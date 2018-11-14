@@ -17,6 +17,7 @@
                 <el-row :gutter="10">
                     <el-col v-for="(item, i) in 10" :key="i" :span="24">
                         <shopinfo></shopinfo>
+                        Shopdetail {{count}}
                     </el-col>
                 </el-row>
                 <!-- <i v-for="i in 60" :key="i" class="fa fa-camera-retro fa-4x"></i> -->
@@ -26,8 +27,9 @@
         <!-- <footer>4</footer> -->
     </div>
 </template>
-
 <script>
+import { mapState } from 'vuex';
+
 export default {
   name: 'Home',
   data() {
@@ -57,6 +59,11 @@ export default {
   mounted() {
     // this.handleAa();
     // document.addEventListener('touchmove', this.handleAa, false);
+  },
+  computed: {
+    ...mapState([
+      'count'
+    ])
   },
   methods: {
     // fjumptoad(i) {
