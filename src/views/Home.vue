@@ -15,10 +15,10 @@
                     <el-col :span="24">广告轮播</el-col>
                 </el-row>
                 <el-row :gutter="10">
-                    <el-col v-for="(item, i) in 10" :key="i" :span="24">
-                        <shopinfo></shopinfo>
-                        Shopdetail {{count}}
-                    </el-col>
+                    <!-- <el-col v-for="(item, i) in 10" :key="i" :span="24"> -->
+                        <shopinfo shopname="ss"></shopinfo>
+                        <shopinfo shopname="ll"></shopinfo>
+                    <!-- </el-col> -->
                 </el-row>
                 <!-- <i v-for="i in 60" :key="i" class="fa fa-camera-retro fa-4x"></i> -->
             </main>
@@ -28,7 +28,6 @@
     </div>
 </template>
 <script>
-import { mapState } from 'vuex';
 
 export default {
   name: 'Home',
@@ -59,11 +58,6 @@ export default {
   mounted() {
     // this.handleAa();
     // document.addEventListener('touchmove', this.handleAa, false);
-  },
-  computed: {
-    ...mapState([
-      'count'
-    ])
   },
   methods: {
     // fjumptoad(i) {

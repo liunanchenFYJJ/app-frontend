@@ -7,6 +7,7 @@ import ECarousel from './carousel/index';
 import Centerad from './centerad/index';
 import Shopinfo from './shopinfo/index';
 import NavHeader from './navheader/index';
+import ShopItem from './shopitem/index';
 
 const components = [
   CustomInput,
@@ -16,7 +17,8 @@ const components = [
   ECarousel,
   Centerad,
   Shopinfo,
-  NavHeader
+  NavHeader,
+  ShopItem
   // 异步组件？
   // const CustomInput = (resolve) => { require.ensure([], () => { require('./customInput/index') }) }
   // const TestCom = (resolve) => { require.ensure([], () => { require('./testCom/index') }) }
@@ -42,5 +44,6 @@ export default {
   ECarousel,
   Centerad,
   Shopinfo,
-  NavHeader
+  NavHeader,
+  ShopItem
 };

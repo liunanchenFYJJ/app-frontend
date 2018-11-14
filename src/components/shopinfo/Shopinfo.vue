@@ -8,7 +8,7 @@
         </el-col>
         <el-col :span="18">
             <div>
-                <section><i class="iclass">品牌</i><span>四有青年米粉</span></section>
+                <section><i class="iclass">品牌</i><span>{{shopname}}</span>{{count}}</section>
                 <section>
                     <el-rate style="display: inline;" v-model="ratevalue" show-score score-template="{value}" :colors="['#99A9BF', '#F7BA2A', '#FF9900']">></el-rate><span>月售231单</span>
                 </section>
@@ -28,12 +28,20 @@
   </div>
 </template>
 <script>
+import { mapState } from 'vuex';
+
 export default {
   name: 'Shopinfo',
   data() {
     return {
       ratevalue: 3
     };
+  },
+  props: ['shopname'],
+  computed: {
+    ...mapState([
+      'count'
+    ])
   },
   methods: {
     gotodetail() {
