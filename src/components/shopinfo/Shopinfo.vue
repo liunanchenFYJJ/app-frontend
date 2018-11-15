@@ -47,6 +47,10 @@ export default {
     gotodetail() {
       const self = this;
       self.$router.push({ name: 'shopdetail' });
+      // let cart = {`8${self.shopname}`: [{package: [], entities: []}]};
+      const cart = {};
+      cart[self.shopname] = [{ package: [], entities: [] }];
+      window.localStorage.setItem('CART', JSON.stringify(cart));
     }
   }
 };
